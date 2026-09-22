@@ -1,0 +1,255 @@
+:root{
+  --cream:      #FAF5E9;
+  --cream-2:    #F3ECDB;
+  --ink:        #3B3223;
+  --ink-soft:   #6B6150;
+  --petal:      #E7B23C;
+  --petal-deep: #6B4A1F;
+  --stem:       #5C6B3E;
+  --btn:        #B5652E;      /* color de fondo de TODOS los botones "siguiente" */
+  --btn-text:   #FAF5E9;      /* color del texto dentro del botón */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Karla',sans-serif;
+  overflow:hidden;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --cream:#201C13; --cream-2:#2A2418; --ink:#F3ECDB; --ink-soft:#C9BEA6;
+  }
+}
+:root[data-theme="dark"]{
+  --cream:#201C13; --cream-2:#2A2418; --ink:#F3ECDB; --ink-soft:#C9BEA6;
+}
+
+#scroller{
+  height:100%;
+  width:100%;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+section{
+  height:100%;
+  width:100%;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:12vh 8vw 8vh;
+  position:relative;
+  overflow:hidden;
+}
+
+/* puntitos de progreso */
+#dots{
+  position:fixed;
+  top:calc(18px + env(safe-area-inset-top,0px));
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:7px;
+  z-index:20;
+}
+#dots span{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--petal-deep);
+  opacity:.25;
+  transition:opacity .35s, width .35s;
+}
+#dots span.active{opacity:.9; width:20px; border-radius:4px;}
+
+h1,h2{
+  font-family:'Fraunces',serif;
+  font-weight:500;
+  line-height:1.15;
+  margin:0 0 14px;
+  max-width:14ch;
+}
+h1{font-size:clamp(28px,7vw,44px);}
+p{
+  font-family:'Karla',sans-serif;
+  color:var(--ink-soft);
+  font-size:clamp(14px,3.8vw,16px);
+  line-height:1.6;
+  max-width:32ch;
+  margin:0 0 8px;
+}
+
+.eyebrow{
+  font-family:'Karla',sans-serif;
+  letter-spacing:.14em;
+  font-size:11px;
+  color:var(--ink-soft);
+  margin-bottom:10px;
+}
+
+button.next, a.next{
+  margin-top:34px;
+  background:var(--btn);
+  color:var(--btn-text);
+  border:none;
+  padding:14px 30px;
+  border-radius:999px;
+  font-family:'Karla',sans-serif;
+  font-size:15px;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+  transition:transform .2s ease, opacity .5s ease;
+}
+button.next:active, a.next:active{transform:scale(.96);}
+
+/* Si en vez de cambiar TODOS los botones quieres que solo el de
+   "Seguir" (página 3) tenga otro color, dale un id en index.html
+   (ej. id="giftBtn") y descomenta esto:
+#giftBtn{ background:#5C6B3E; }
+*/
+
+.replay{
+  margin-top:22px;
+  font-size:13px;
+  color:var(--ink-soft);
+  text-decoration:underline;
+  cursor:pointer;
+  background:none;
+  border:none;
+  font-family:'Karla',sans-serif;
+}
+
+/* texto/botón que aparece DESPUÉS de que el ramo termina su animación */
+.reveal-after{
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+section[data-idx="1"] .reveal-after,
+section[data-idx="2"] .reveal-after{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.reveal-after.shown{
+  opacity:1;
+  transform:translateY(0);
+}
+.line-before{ transition:opacity .4s ease; }
+.line-before.faded{ opacity:0; }
+
+/* pétalos cayendo — capa ambiente */
+.petals{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.petals i{
+  position:absolute;
+  top:-5%;
+  font-size:14px;
+  opacity:.55;
+  animation:fall linear infinite;
+  font-style:normal;
+}
+@keyframes fall{
+  to{ transform:translateY(115vh) rotate(200deg); }
+}
+
+.flower-icon{ width:64px; height:64px; margin-bottom:22px; }
+.flower-icon.big{ width:120px; height:120px; margin-bottom:0; }
+
+.bouquet{ width:min(78vw,300px); margin-bottom:6px; overflow:visible; }
+
+/* --- animación de tallos (se dibujan) --- */
+.stem{
+  fill:none;
+  stroke:var(--stem);
+  stroke-width:4;
+  stroke-linecap:round;
+  transition:stroke-dashoffset 1s cubic-bezier(.4,.1,.2,1);
+}
+
+/* --- animación de flores (brotan) --- */
+.bloom{
+  opacity:0;
+  transform:scale(0);
+  transform-box:fill-box;
+  transform-origin:center;
+  transition:opacity .5s ease, transform .55s cubic-bezier(.34,1.56,.64,1);
+}
+.bloom.shown{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* --- sobre y ramo asentándose (sección 3) --- */
+.envelope{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1.1);
+}
+.envelope.shown{
+  opacity:1;
+  transform:translateY(0);
+}
+.settle-group{
+  transform:translateY(-14px);
+  transition:transform .7s cubic-bezier(.22,.9,.3,1.1);
+}
+.settle-group.shown{
+  transform:translateY(0);
+}
+
+.note{
+  background:var(--cream-2);
+  border-radius:18px;
+  padding:26px 24px;
+  text-align:left;
+  max-width:360px;
+  width:88vw;
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+}
+.note h2{font-size:clamp(20px,5.5vw,24px); margin-bottom:16px;}
+.note p{max-width:none; margin-bottom:14px;}
+.quote{
+  background:var(--cream);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-top:16px;
+}
+.quote .lead{font-size:12px; color:var(--ink-soft); margin-bottom:6px;}
+.quote .line{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:17px;
+  color:var(--ink);
+  margin:0;
+}
+
+.signoff{margin-top:6px; color:var(--ink-soft); font-size:13px;}
+#signoffName{
+  display:block;
+  font-family:'Fraunces',serif;
+  font-weight:500;
+  font-size:22px;
+  color:var(--ink);
+  margin-top:4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .petals i{animation:none; display:none;}
+  .stem, .bloom, .envelope, .settle-group, .reveal-after{transition:none;}
+}
