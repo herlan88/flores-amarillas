@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Un detallito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="dots"></div>
+
+<div id="scroller">
+
+  <!-- SECCIÓN 0 — Saludo -->
+  <section data-idx="0">
+    <div class="petals" data-density="10"></div>
+    <svg class="flower-icon" viewBox="0 0 100 100"><g id="flowerSvg1"></g></svg>
+    <p class="eyebrow" id="tag1"></p>
+    <h1 id="greeting"></h1>
+    <p id="subgreeting"></p>
+    <button class="next" data-go="1">Abrir</button>
+  </section>
+
+  <!-- SECCIÓN 1 — Crecimiento del ramo (tallos + flores brotando) -->
+  <section data-idx="1">
+    <div class="petals" data-density="8"></div>
+    <svg id="growSvg" class="bouquet" viewBox="0 0 240 260"></svg>
+    <p id="line2a" class="line-before"></p>
+    <div class="reveal-after">
+      <p id="line2b"></p>
+      <button class="next" data-go="2">Ahora sí</button>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2 — El ramo se asienta en el sobre -->
+  <section data-idx="2">
+    <div class="petals" data-density="8"></div>
+    <svg id="giftSvg" class="bouquet" viewBox="0 0 240 300"></svg>
+    <p id="line3" class="reveal-after"></p>
+    <button class="next reveal-after" data-go="3">Seguir</button>
+  </section>
+
+  <!-- SECCIÓN 3 — Nota personalizada -->
+  <section data-idx="3">
+    <div class="petals" data-density="6"></div>
+    <p class="eyebrow" id="tag2"></p>
+    <div class="note">
+      <h2 id="noteTo"></h2>
+      <p id="noteBody1"></p>
+      <div class="quote">
+        <p class="lead" id="quoteLead"></p>
+        <p class="line" id="quoteLine"></p>
+      </div>
+    </div>
+    <button class="next" data-go="4">Una última cosa</button>
+  </section>
+
+  <!-- SECCIÓN 4 — Cierre -->
+  <section data-idx="4">
+    <div class="petals" data-density="6"></div>
+    <svg class="flower-icon big" viewBox="0 0 100 100"><g id="flowerSvg2"></g></svg>
+    <h1 id="closing"></h1>
+    <p id="closingSub"></p>
+    <p class="signoff" id="signoffLead"></p>
+    <b id="signoffName"></b>
+    <button class="replay" id="replayBtn">volver a verlo</button>
+  </section>
+
+</div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
