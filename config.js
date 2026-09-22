@@ -30,6 +30,6 @@ const CONFIG = {
 
   // Página 5 — cierre
   cierreTitulo: "Ojala esto te haya sacado aunque sea una sonrisa",
-  cierreSub:    "Eso era todo, solo quería dejarte un detalle bonito. Pdt: Me debes otro pemio profe JAJAJA",
+  cierreSub:    "Eso era todo Jeslyn, solo quería dejarte un detalle bonito. Pdt: Me debes otro pemio profe JAJAJA",
   firmaLead:    "Con cariño",
 };
